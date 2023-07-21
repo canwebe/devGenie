@@ -1,13 +1,18 @@
-export const getPromt = (type: string, tone: string, description: string) => {
+export const getPromt = (
+  mode: string,
+  tone: string,
+  characters: number,
+  prompt: string
+) => {
   let promptType = 'a profile bio'
 
-  if (type === 'project') {
+  if (mode === 'project') {
     promptType = 'a project description'
   }
 
-  if (type === 'experience') {
+  if (mode === 'experience') {
     promptType = 'an experience'
   }
 
-  return `Create ${promptType} in ${tone} tone. Make sure to use simple sentences and base them on this context : ${description}`
+  return `Create ${promptType} in ${tone} tone. Make sure to use simple sentences, under ${characters} characters and base them on this context : ${prompt}`
 }

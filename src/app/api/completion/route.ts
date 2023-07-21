@@ -4,10 +4,10 @@ import { getPromt } from '@/utils/helper'
 import { CohereStream, StreamingTextResponse } from 'ai'
 
 interface data {
-  description: string
-  type: string
+  prompt: string
+  mode: string
   tone: string
-  creativity: number
+  creativity: string
   characters: number
 }
 
@@ -19,18 +19,18 @@ export async function POST(req: Request) {
   const data: data = await req.json()
 
   // Destructuring the data object
-  const { description, type, tone, creativity, characters } = data
+  const { prompt, mode, tone, creativity, characters } = data
 
   // Getting the prompt based on type
-  const prompt = getPromt(type, tone, description)
+  const promptText = getPromt(mode, tone, characters, prompt)
 
   // Body for POST request
   const body = JSON.stringify({
     model: 'command-xlarge-nightly',
-    prompt: prompt,
+    prompt: promptText,
     return_likelihoods: 'NONE',
-    max_tokens: characters * 3, // size of the response text
-    temperature: creativity, // randomness
+    max_tokens: 250, // size of the response text
+    temperature: parseInt(creativity), // randomness
     stream: true, // For streaming response
   })
 
