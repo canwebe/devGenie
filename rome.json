@@ -1,0 +1,25 @@
+{
+	"$schema": "https://docs.rome.tools/schemas/12.1.3/schema.json",
+	"organizeImports": {
+		"enabled": true,
+		"ignore": ["node_modules", ".next"]
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true
+		},
+		"ignore": ["node_modules", ".next"]
+	},
+	"formatter": {
+		"formatWithErrors": true,
+		"ignore": ["node_modules", ".next"]
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "single",
+			"trailingComma": "none",
+			"semicolons": "asNeeded"
+		}
+	}
+}
