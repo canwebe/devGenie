@@ -16,7 +16,7 @@ const Slider = React.forwardRef<
 	React.ElementRef<typeof SliderPrimitive.Root>,
 	React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root>
 >(({ className, ...props }, ref) => {
-	const [sliderValue, setSliderValue] = React.useState(120)
+	const [sliderValue, setSliderValue] = React.useState(200)
 	const [drag, setDrag] = React.useState(false)
 
 	return (
