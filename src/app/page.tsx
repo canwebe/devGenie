@@ -47,18 +47,16 @@ import { fontSansCD } from '@/lib/fonts'
 import { formSchema } from '@/lib/formSchema'
 import { cn } from '@/lib/utils'
 import { z } from 'zod'
+import DbInsights from '@/components/dbInsights'
 
 type formData = z.infer<typeof formSchema>
 
 export default function Home() {
-  // Local States
-  const [body, setBody] = useState<formData | {}>({})
-
   // Generated Content Ref for scrolling
-  const targetRef = useRef<null | HTMLHeadingElement>(null)
+  const targetRef = useRef<null | HTMLElement>(null)
 
   const scrollTo = () => {
-    console.log(targetRef)
+    console.log(targetRef, 'log target ref')
     if (targetRef.current) {
       targetRef.current.scrollIntoView({ behavior: 'smooth' })
     }
@@ -93,15 +91,17 @@ export default function Home() {
       creativity: form.getValues('creativity'),
     },
     onResponse: (res) => {
-      scrollTo()
-      toast.success('Resopnse found')
       if (res.status === 429) {
         toast.error('You are being rate limited. Please try again later.')
       }
+      scrollTo()
     },
     onError: (error) => {
       toast.error('Something went wrong! Please try again later.')
       console.log(error)
+    },
+    onFinish: () => {
+      toast.success('Generated Successfully')
     },
   })
 
@@ -201,7 +201,7 @@ export default function Home() {
           that showcase your skills and expertise.
         </p>
       </header>
-
+      <DbInsights />
       <main className="max-w-2xl w-full px-4 mx-auto">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
@@ -377,7 +377,6 @@ export default function Home() {
           </form>
         </Form>
         {/* Generate div */}
-
         <output className="flex flex-col space-y-10 mt-10">
           {completion ? (
             <>
@@ -392,7 +391,6 @@ export default function Home() {
               </h2>
               {/* rome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
               <div
-                ref={targetRef}
                 title="Click to copy"
                 className="rounded-xl shadow-md p-4 hover:bg-muted/50 transition cursor-copy border"
                 onClick={() => {
@@ -407,18 +405,18 @@ export default function Home() {
         </output>
       </main>
       <Separator className="sm:mt-22 mt-16" />
-      <footer className="text-center text-sm max-w-2xl mx-auto h-16 sm:h-20 w-full sm:pt-2 pt-4 flex sm:flex-row flex-col justify-center items-center px-3 space-y-3 sm:mb-0 mb-3">
+      <footer
+        ref={targetRef}
+        className="text-center text-sm max-w-2xl mx-auto h-16 sm:h-20 w-full sm:pt-2 pt-4 flex sm:flex-row flex-col justify-center items-center px-3 space-y-3 sm:mb-0 mb-3"
+      >
         <p>
-          Powered by{' '}
+          Developed by{' '}
+          <Link className="font-bold underline" href={'https://canwebe.in/'}>
+            CanWeBe!
+          </Link>{' '}
+          with{' '}
           <Link className="font-bold underline" href={'https://cohere.com/'}>
             Cohere
-          </Link>{' '}
-          and{' '}
-          <Link
-            className="font-bold underline"
-            href={'https://sdk.vercel.ai/docs'}
-          >
-            Vercel AI SDK
           </Link>
         </p>
       </footer>
