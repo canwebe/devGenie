@@ -1,8 +1,8 @@
 import Link from 'next/link'
-import { GithubIcon } from './icons'
 import { Badge } from './ui/badge'
 import { fontSansCD } from '@/lib/fonts'
 import { cn } from '@/lib/utils'
+import { GithubIcon } from 'lucide-react'
 
 export default function Header() {
   return (

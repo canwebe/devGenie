@@ -35,6 +35,7 @@ import { toast } from 'sonner'
 import { NumberList } from './ui/number'
 import { Textarea } from './ui/textarea'
 import { Label } from './ui/label'
+import { incrementGenerateCount } from '@/utils/firebase-helper'
 
 type formData = z.infer<typeof formSchema>
 
@@ -67,10 +68,10 @@ export default function MainForm() {
   // Vercel AI SDK
   const { completion, complete, isLoading } = useCompletion({
     body: {
-      tone: form.getValues('tone'),
+      tone: form.getValues('tone') || 'professional',
       mode: form.getValues('mode'),
       characters: form.getValues('characters'),
-      creativity: form.getValues('creativity'),
+      creativity: form.getValues('creativity') || '0.9',
     },
     onResponse: (res) => {
       if (res.status === 429) {
@@ -84,12 +85,14 @@ export default function MainForm() {
     },
     onFinish: () => {
       toast.success('Generated Successfully')
+      incrementGenerateCount()
     },
   })
 
   // Functions
   const onSubmit = async (data: formData) => {
     try {
+      console.log('Form Data', data)
       if (!user) {
         toast.error('You need to login first')
         return
@@ -99,8 +102,6 @@ export default function MainForm() {
       console.log(error)
     }
   }
-
-  console.log(user, isAuthReady)
 
   return (
     <>
@@ -205,7 +206,6 @@ export default function MainForm() {
                         </SelectGroup>
                       </SelectContent>
                     </Select>
-                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -236,7 +236,6 @@ export default function MainForm() {
                         </SelectGroup>
                       </SelectContent>
                     </Select>
-                    <FormMessage />
                   </FormItem>
                 )}
               />
