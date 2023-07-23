@@ -12,8 +12,8 @@ export default async function Insights({
 
   return (
     <div className="mb-6 text-center">
-      <div className="mb-2 opacity-60 text-[18px]">
-        <p>Total Generation : {count.toString()}</p>
+      <div className="mb-2 opacity-60 text-[25px]">
+        <p>Total Generated : {count.toString()}</p>
       </div>
       <div>
         <div className="flex justify-center">
@@ -28,7 +28,7 @@ export default async function Insights({
             />
           ))}
         </div>
-        <p className="mt-2 opacity-60">Recently Joined</p>
+        <p className="mt-2 opacity-50 text-xs">Recently Joined</p>
       </div>
     </div>
   )

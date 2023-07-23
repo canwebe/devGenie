@@ -1,9 +1,17 @@
 'use client'
 
+import { useRef } from 'react'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useCompletion } from 'ai/react'
+import { z } from 'zod'
+import { toast } from 'sonner'
+import { ArrowRight } from 'lucide-react'
+
 import { fontSansCD } from '@/lib/fonts'
 import { Separator } from './ui/seprator'
 import { cn } from '@/lib/utils'
-import { ArrowRight } from 'lucide-react'
+
 import { Button } from './ui/button'
 import {
   Form,
@@ -24,18 +32,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from './ui/select'
-import { useAuth } from '@/contexts/firebaseContext'
-import { formSchema } from '@/lib/formSchema'
-import { z } from 'zod'
-import { useRef } from 'react'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useCompletion } from 'ai/react'
-import { toast } from 'sonner'
 import { NumberList } from './ui/number'
 import { Textarea } from './ui/textarea'
 import { Label } from './ui/label'
+
+import { formSchema } from '@/lib/formSchema'
 import { incrementGenerateCount } from '@/utils/firebase-helper'
+import { useAuth } from '@/contexts/firebaseContext'
 
 type formData = z.infer<typeof formSchema>
 
@@ -72,15 +75,15 @@ export default function MainForm() {
       mode: form.getValues('mode'),
       characters: form.getValues('characters'),
       creativity: form.getValues('creativity') || '0.9',
+      uid: user?.uid || '127.0.0.1',
     },
     onResponse: (res) => {
       if (res.status === 429) {
-        toast.error('You are being rate limited. Please try again later.')
+        toast.error('You have used 15 generation. Please try again 5min later.')
       }
       scrollTo()
     },
     onError: (error) => {
-      toast.error('Something went wrong! Please try again later.')
       console.log(error)
     },
     onFinish: () => {

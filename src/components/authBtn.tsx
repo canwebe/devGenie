@@ -1,5 +1,7 @@
 'use client'
 
+import { Loader } from 'lucide-react'
+
 import { GithubIcon, GoogleIcon } from './icons'
 import { Button } from './ui/button'
 import {
@@ -11,14 +13,10 @@ import {
   DialogTrigger,
 } from './ui/dialog'
 
-import { ThemeToggle } from './theme-toggle'
-
 import { cn } from '@/lib/utils'
-import { fontSansCD } from '@/lib/fonts'
+import { useAuth } from '@/contexts/firebaseContext'
 
 import useLogin from '@/hooks/useLogin'
-import { Loader } from 'lucide-react'
-import { useAuth } from '@/contexts/firebaseContext'
 import useLogout from '@/hooks/useLogout'
 
 export default function AuthBtn() {

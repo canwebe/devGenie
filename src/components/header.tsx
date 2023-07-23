@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { Badge } from './ui/badge'
 import { fontSansCD } from '@/lib/fonts'
 import { cn } from '@/lib/utils'

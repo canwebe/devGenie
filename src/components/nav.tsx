@@ -1,11 +1,11 @@
 'use client'
 import { ThemeToggle } from './theme-toggle'
 
-import { cn } from '@/lib/utils'
-import { fontSansCD } from '@/lib/fonts'
-
 import AuthBtn from './authBtn'
 import { Separator } from './ui/seprator'
+
+import { cn } from '@/lib/utils'
+import { fontSansCD } from '@/lib/fonts'
 
 export default function Nav() {
   return (

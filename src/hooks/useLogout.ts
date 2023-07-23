@@ -1,9 +1,10 @@
-import { useAuth } from '@/contexts/firebaseContext'
-import { auth } from '@/lib/firebase'
-import { AuthActionType } from '@/reducers/authReducer'
 import { signOut } from 'firebase/auth'
 import { useState } from 'react'
 import { toast } from 'sonner'
+
+import { useAuth } from '@/contexts/firebaseContext'
+import { auth } from '@/lib/firebase'
+import { AuthActionType } from '@/reducers/authReducer'
 
 export default function useLogout() {
   // Local States

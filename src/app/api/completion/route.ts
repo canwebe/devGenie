@@ -1,7 +1,10 @@
 // API/COMPLETION
 
 import { getPromt } from '@/utils/helper'
+import { Ratelimit } from '@upstash/ratelimit'
+import { Redis } from '@upstash/redis'
 import { CohereStream, StreamingTextResponse } from 'ai'
+import { NextResponse } from 'next/server'
 
 interface Data {
   prompt: string
@@ -9,6 +12,7 @@ interface Data {
   tone: string
   creativity: string
   characters: number
+  uid: string
 }
 
 // For Running on Edge
@@ -21,7 +25,26 @@ export async function POST(req: Request) {
   console.log('\nPrompt:', data)
 
   // Destructuring the data object
-  const { prompt, mode, tone, creativity, characters } = data
+  const { prompt, mode, tone, creativity, characters, uid } = data
+
+  // Rate Limiter init
+  const ratelimit = new Ratelimit({
+    redis: Redis.fromEnv(),
+    limiter: Ratelimit.slidingWindow(15, '5 m'),
+  })
+
+  const identifier = uid // Limited by userid
+
+  const { success, limit, remaining } = await ratelimit.limit(identifier)
+
+  console.log(`Limit:- ${limit}, Remaining:- ${remaining}`)
+
+  if (!success) {
+    return NextResponse.json(
+      { error: 'You are being Rate limited' },
+      { status: 429 }
+    )
+  }
 
   // Getting the prompt based on type
   const promptText = getPromt(mode, tone, characters, prompt)
@@ -35,8 +58,6 @@ export async function POST(req: Request) {
     temperature: Number(creativity), // randomness
     stream: true, // For streaming response
   })
-
-  console.log('\nBody:', body)
 
   // Fetching POST request to cohere api
   const response = await fetch('https://api.cohere.ai/generate', {
