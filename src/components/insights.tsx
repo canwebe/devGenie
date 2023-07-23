@@ -1,24 +1,21 @@
-import { getGenerationCount, getUsersLists } from '@/utils/firebase-helper'
+import { DocumentData } from 'firebase/firestore'
 import Image from 'next/image'
 
-export const dynamic = 'force-dynamic'
-export const revalidate = 60
-
-export default async function Insights() {
-  const countData = getGenerationCount()
-  const usersListData = getUsersLists()
-
-  const [count, usersList] = await Promise.all([countData, usersListData])
-
+export default async function Insights({
+  count,
+  usersList,
+}: {
+  count: number
+  usersList: DocumentData[]
+}) {
   console.count('Insight re render')
 
   return (
     <div className="mb-6 text-center">
-      <div className="mb-2 opacity-60">
+      <div className="mb-2 opacity-60 text-[18px]">
         <p>Total Generation : {count.toString()}</p>
       </div>
       <div>
-        <p className="mb-2 opacity-60">Recently Joined</p>
         <div className="flex justify-center">
           {usersList.map((user) => (
             <Image
@@ -31,6 +28,7 @@ export default async function Insights() {
             />
           ))}
         </div>
+        <p className="mt-2 opacity-60">Recently Joined</p>
       </div>
     </div>
   )
