@@ -1,5 +1,3 @@
-import { Separator } from '@/components/ui/seprator'
-
 import Header from '@/components/header'
 import MainForm from '@/components/mainForm'
 import Nav from '@/components/nav'

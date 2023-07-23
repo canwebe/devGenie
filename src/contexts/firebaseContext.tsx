@@ -1,13 +1,4 @@
 'use client'
-
-import { auth } from '@/lib/firebase'
-import AuthReducer, {
-  Action,
-  AuthActionType,
-  AuthData,
-  INITIAL_STATE,
-} from '@/reducers/authReducer'
-import { Unsubscribe, onAuthStateChanged } from 'firebase/auth'
 import {
   Dispatch,
   ReactNode,
@@ -16,6 +7,15 @@ import {
   useEffect,
   useReducer,
 } from 'react'
+import { Unsubscribe, onAuthStateChanged } from 'firebase/auth'
+
+import { auth } from '@/lib/firebase'
+import AuthReducer, {
+  Action,
+  AuthActionType,
+  AuthData,
+  INITIAL_STATE,
+} from '@/reducers/authReducer'
 
 type AuthContextType = AuthData & { dispatch: Dispatch<Action> }
 

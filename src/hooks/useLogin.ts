@@ -1,10 +1,11 @@
+import { useState } from 'react'
+import { toast } from 'sonner'
+import { signInWithPopup } from 'firebase/auth'
+
 import { useAuth } from '@/contexts/firebaseContext'
 import { GithubProvider, GoogleProvider, auth } from '@/lib/firebase'
 import { AuthActionType } from '@/reducers/authReducer'
 import { createUser } from '@/utils/firebase-helper'
-import { signInWithPopup } from 'firebase/auth'
-import { useState } from 'react'
-import { toast } from 'sonner'
 
 export default function useLogin() {
   const [isLoading, setIsLoading] = useState(false)
