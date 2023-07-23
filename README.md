@@ -17,43 +17,46 @@
 
 DevGenie is built using modern technologies and frameworks, combining the power of serverless backends, AI models, and user-friendly UI components. The technical stack includes:
 
-1. **Next.js**: ![Next.js](https://img.shields.io/badge/-Next.js-000000?style=flat&logo=next.js&logoColor=white)
+1. **Next.js**: ![Next.js](https://img.shields.io/badge/-Next.js-007ACC?style=flat-square&logo=next.js&logoColor=white)
    A powerful React framework for building fast and scalable web applications.
 
-2. **Next.js 13 API routes**: ![Next.js API Routes](https://img.shields.io/badge/-Next.js%2013%20API%20Routes-000000?style=flat&logo=next.js&logoColor=white)
+2. **Next.js 13 API routes**: ![Next.js API Routes](https://img.shields.io/badge/-Next.js%2013%20API%20Routes-007ACC?style=flat-square&logo=next.js&logoColor=white)
    Utilizing Next.js API routes to create serverless backends, enabling seamless data handling and interactions.
 
-3. **Vercel EDGE functions**: ![Vercel EDGE](https://img.shields.io/badge/-Vercel%20EDGE%20functions-000000?style=flat&logo=vercel&logoColor=white)
+3. **Vercel EDGE functions**: ![Vercel EDGE](https://img.shields.io/badge/-Vercel%20EDGE%20functions-000000?style=flat-square&logo=vercel&logoColor=white)
    Leveraging Vercel's EDGE functions to deploy serverless code that runs close to the user, ensuring low latency and high performance.
 
-4. **Vercel AI SDK for streaming response**: ![Vercel AI SDK](https://img.shields.io/badge/-Vercel%20AI%20SDK-000000?style=flat&logo=vercel&logoColor=white)
+4. **Vercel AI SDK for streaming response**: ![Vercel AI SDK](https://img.shields.io/badge/-Vercel%20AI%20SDK-000000?style=flat-square&logo=vercel&logoColor=white)
    Using Vercel's AI SDK for handling streaming responses, providing real-time updates to users.
 
-5. **Cohere**: ![Cohere](https://img.shields.io/badge/-Cohere-000000?style=flat&logo=cohere&logoColor=white)
+5. **Cohere**: ![Cohere](https://img.shields.io/badge/-Cohere-6D28D9?style=flat-square&logo=cohere&logoColor=white)
    An AI-powered text generation platform, integrated to create AI-driven content for profiles and projects.
 
-6. **Shadecn/ui**: ![Shadecn UI](https://img.shields.io/badge/-Shadecn%2Fui-000000?style=flat&logo=react&logoColor=white)
+6. **Shadecn/ui**: ![Shadecn UI](https://img.shields.io/badge/-Shadecn%2Fui-34D399?style=flat-square&logo=react&logoColor=white)
    A collection of beautiful and customizable UI components for enhancing the user experience.
 
-7. **TypeScript**: ![TypeScript](https://img.shields.io/badge/-TypeScript-000000?style=flat&logo=typescript&logoColor=white)
+7. **Tailwind CSS**: ![Tailwind CSS](https://img.shields.io/badge/-Tailwind%20CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)
+   A utility-first CSS framework for rapidly building custom user interfaces.
+
+8. **TypeScript**: ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
    A typed superset of JavaScript, offering enhanced code quality and developer productivity.
 
-8. **Sonner**: ![Sonner](https://img.shields.io/badge/-Sonner-000000?style=flat&logo=react&logoColor=white)
+9. **Sonner**: ![Sonner](https://img.shields.io/badge/-Sonner-4B5563?style=flat-square&logo=react&logoColor=white)
    A user-friendly toast notification library for providing non-intrusive feedback to users.
 
-9. **React Hook Form**: ![React Hook Form](https://img.shields.io/badge/-React%20Hook%20Form-000000?style=flat&logo=react&logoColor=white)
-   A flexible and efficient form validation library for handling user input.
+10. **React Hook Form**: ![React Hook Form](https://img.shields.io/badge/-React%20Hook%20Form-61DAFB?style=flat-square&logo=react&logoColor=white)
+    A flexible and efficient form validation library for handling user input.
 
-10. **Zod**: ![Zod](https://img.shields.io/badge/-Zod-000000?style=flat&logo=zod&logoColor=white)
+11. **Zod**: ![Zod](https://img.shields.io/badge/-Zod-4950A0?style=flat-square&logo=zod&logoColor=white)
     A powerful schema validation library for defining and enforcing form data rules.
 
-11. **Firebase Authentication**: ![Firebase Authentication](https://img.shields.io/badge/-Firebase%20Authentication-000000?style=flat&logo=firebase&logoColor=white)
+12. **Firebase Authentication**: ![Firebase Authentication](https://img.shields.io/badge/-Firebase%20Authentication-FFCA28?style=flat-square&logo=firebase&logoColor=black)
     Integrating Firebase for user authentication, ensuring secure and authenticated access.
 
-12. **Firestore**: ![Firestore](https://img.shields.io/badge/-Firestore-000000?style=flat&logo=firebase&logoColor=white)
+13. **Firestore**: ![Firestore](https://img.shields.io/badge/-Firestore-FFCA28?style=flat-square&logo=firebase&logoColor=black)
     A NoSQL database provided by Firebase for efficient and scalable data storage.
 
-13. **Upstash**: ![Upstash](https://img.shields.io/badge/-Upstash-000000?style=flat&logo=redis&logoColor=white)
+14. **Upstash**: ![Upstash](https://img.shields.io/badge/-Upstash-DC382D?style=flat-square&logo=redis&logoColor=white)
     A Redis-based rate limiter for controlling user request rates, preventing abuse and ensuring server stability.
 
 ## Features
@@ -92,5 +95,5 @@ DevGenie is open-source software licensed under the [MIT License](LICENSE). Feel
 ---
 
 Developed with ❤️ by [CanWeBe!](https://canwebe.in)
-and Contributers [Raju Khatri](https://yourgithub)
-, [Golam Rabbani](https://mygithub)
+and Contributers [Raju Khatri](https://github.com/Kiyoponn),
+[Golam Rabbani](https://github.com/devRabbani)
