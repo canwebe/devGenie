@@ -68,7 +68,8 @@ export const getUsersLists = async () => {
     const snapshot = await getDocs(usersCol)
 
     if (snapshot.empty) {
-      throw Error('Something went wrong in getting user list')
+      console.error('Users List is empty')
+      return []
     }
     return snapshot.docs.map((item) => item.data())
   } catch (error) {
