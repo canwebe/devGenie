@@ -6,25 +6,25 @@ import { useState } from 'react'
 import { toast } from 'sonner'
 
 export default function useLogout() {
-  // Local States
-  const [isLoading, setIsLoading] = useState(false)
+	// Local States
+	const [isLoading, setIsLoading] = useState(false)
 
-  // Dispatch
-  const { dispatch } = useAuth()
+	// Dispatch
+	const { dispatch } = useAuth()
 
-  const logout = async () => {
-    try {
-      setIsLoading(true)
-      await signOut(auth)
-      dispatch({ type: AuthActionType.LOGOUT })
-      setIsLoading(false)
-      toast.success('Logged out')
-    } catch (error) {
-      console.log(error)
-      toast.error('Something went wrong in logout, Try Again!')
-      setIsLoading(false)
-    }
-  }
+	const logout = async () => {
+		try {
+			setIsLoading(true)
+			await signOut(auth)
+			dispatch({ type: AuthActionType.LOGOUT })
+			setIsLoading(false)
+			toast.success('Logged out')
+		} catch (error) {
+			console.log(error)
+			toast.error('Something went wrong in logout, Try Again!')
+			setIsLoading(false)
+		}
+	}
 
-  return { logout, isLoading }
+	return { logout, isLoading }
 }

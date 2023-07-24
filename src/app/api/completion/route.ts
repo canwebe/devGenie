@@ -1,56 +1,41 @@
-// API/COMPLETION
-
+import { formSchema } from '@/lib/formSchema'
 import { getPromt } from '@/utils/helper'
 import { CohereStream, StreamingTextResponse } from 'ai'
+import { z } from 'zod'
 
-interface Data {
-  prompt: string
-  mode: string
-  tone: string
-  creativity: string
-  characters: number
+type Data = Omit<z.infer<typeof formSchema>, 'description'> & {
+	prompt: string
 }
 
-// For Running on Edge
 export const runtime = 'edge'
 
 export async function POST(req: Request) {
-  // Getting the request data
-  const data: Data = await req.json()
+	const data: Data = await req.json()
+	const { prompt, mode, tone, creativity, characters } = data
 
-  console.log('\nPrompt:', data)
+	const promptText = getPromt(mode, tone, characters, prompt)
 
-  // Destructuring the data object
-  const { prompt, mode, tone, creativity, characters } = data
+	const body = JSON.stringify({
+		model: 'command-xlarge-nightly',
+		prompt: promptText,
+		return_likelihoods: 'NONE',
+		max_tokens: 300,
+		temperature: parseInt(creativity),
+		stream: true
+	})
 
-  // Getting the prompt based on type
-  const promptText = getPromt(mode, tone, characters, prompt)
+	const response = await fetch('https://api.cohere.ai/generate', {
+		method: 'POST',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${process.env.COHERE_API_KEY!}`,
+			'Cohere-Version': '2022-12-06'
+		},
+		body
+	})
 
-  // Body for POST request
-  const body = JSON.stringify({
-    model: 'command-xlarge-nightly',
-    prompt: promptText,
-    return_likelihoods: 'NONE',
-    max_tokens: 250, // size of the response text
-    temperature: Number(creativity), // randomness
-    stream: true, // For streaming response
-  })
+	const stream = CohereStream(response)
 
-  console.log('\nBody:', body)
-
-  // Fetching POST request to cohere api
-  const response = await fetch('https://api.cohere.ai/generate', {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${process.env.COHERE_API_KEY!}`,
-      'Cohere-Version': '2022-12-06',
-    },
-    body,
-  })
-
-  const stream = CohereStream(response)
-
-  return new StreamingTextResponse(stream)
+	return new StreamingTextResponse(stream)
 }
