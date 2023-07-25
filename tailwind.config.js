@@ -13,6 +13,12 @@ module.exports = {
 			}
 		},
 		extend: {
+			height: {
+				18: '4.5rem'
+			},
+			width: {
+				18: '4.5rem'
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',

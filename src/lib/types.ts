@@ -1,29 +1,38 @@
-type Mode = 'profile' | 'project' | 'experience'
+import { formSchema } from './formSchema'
+import { User } from 'firebase/auth'
+import { Dispatch } from 'react'
+import { z } from 'zod'
 
-type Tone =
-	| 'appreciative'
-	| 'assertive'
-	| 'convincing'
-	| 'candid'
-	| 'casual'
-	| 'cautionary'
-	| 'critical'
-	| 'enthusiastic'
-	| 'formal'
-	| 'funny'
-	| 'humble'
-	| 'informative'
-	| 'joyful'
-	| 'worried'
-	| 'urgent'
-	| 'thoughtful'
-	| 'passionate'
-
-type CreativityKeys = 'none' | 'low' | 'medium' | 'high' | 'max'
-
-// none: 0 // low: 0.25 // medium: 0.5 // high: 0.75 // max: 1
-type Creativity = {
-	[key in CreativityKeys]: number
+// Firebase types
+export enum AuthActionType {
+	LOGIN = 'LOGIN',
+	LOGOUT = 'LOGOUT',
+	AUTHREADY = 'AUTHREADY'
 }
 
-export type { Mode, Tone, Creativity }
+export type AuthData = {
+	isAuthReady: Boolean
+	user: User | null
+}
+
+export type UserData = {
+	photoURL: string
+	uid: string
+}
+
+export type Action =
+	| { type: AuthActionType.LOGOUT }
+	| {
+			type: AuthActionType.LOGIN | AuthActionType.AUTHREADY
+			payload: User | null
+	  }
+
+export type AuthContextType = AuthData & { dispatch: Dispatch<Action> }
+
+// Other types
+export type formData = z.infer<typeof formSchema>
+
+export type Data = Omit<z.infer<typeof formSchema>, 'description'> & {
+	prompt: string
+	uid: string
+}
