@@ -38,31 +38,25 @@ DevGenie is built using modern technologies and frameworks, combining the power 
 7. **Tailwind CSS**: ![Tailwind CSS](https://img.shields.io/badge/-Tailwind%20CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)
    A utility-first CSS framework for rapidly building custom user interfaces.
 
-8. **Lucid-icons**: ![Lucid-icons](https://img.shields.io/badge/-Lucid--icons-767676?style=flat-square&logo=lucid-icons&logoColor=white)
-   A library of colorful and expressive icons for enhancing the visual appeal of the application.
+8. **TypeScript**: ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
+   A typed superset of JavaScript, offering enhanced code quality and developer productivity.
 
-9. **Radix-UI**: ![Radix-UI](https://img.shields.io/badge/-Radix--UI-FF5630?style=flat-square&logo=radix-ui&logoColor=white)
-   A set of accessible and composable UI components for building modern web applications.
+9. **Sonner**: ![Sonner](https://img.shields.io/badge/-Sonner-4B5563?style=flat-square&logo=react&logoColor=white)
+   A user-friendly toast notification library for providing non-intrusive feedback to users.
 
-10. **TypeScript**: ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
-    A typed superset of JavaScript, offering enhanced code quality and developer productivity.
-
-11. **Sonner**: ![Sonner](https://img.shields.io/badge/-Sonner-4B5563?style=flat-square&logo=react&logoColor=white)
-    A user-friendly toast notification library for providing non-intrusive feedback to users.
-
-12. **React Hook Form**: ![React Hook Form](https://img.shields.io/badge/-React%20Hook%20Form-61DAFB?style=flat-square&logo=react&logoColor=white)
+10. **React Hook Form**: ![React Hook Form](https://img.shields.io/badge/-React%20Hook%20Form-61DAFB?style=flat-square&logo=react&logoColor=white)
     A flexible and efficient form validation library for handling user input.
 
-13. **Zod**: ![Zod](https://img.shields.io/badge/-Zod-4950A0?style=flat-square&logo=zod&logoColor=white)
+11. **Zod**: ![Zod](https://img.shields.io/badge/-Zod-4950A0?style=flat-square&logo=zod&logoColor=white)
     A powerful schema validation library for defining and enforcing form data rules.
 
-14. **Firebase Authentication**: ![Firebase Authentication](https://img.shields.io/badge/-Firebase%20Authentication-FFCA28?style=flat-square&logo=firebase&logoColor=black)
+12. **Firebase Authentication**: ![Firebase Authentication](https://img.shields.io/badge/-Firebase%20Authentication-FFCA28?style=flat-square&logo=firebase&logoColor=black)
     Integrating Firebase for user authentication, ensuring secure and authenticated access.
 
-15. **Firestore**: ![Firestore](https://img.shields.io/badge/-Firestore-FFCA28?style=flat-square&logo=firebase&logoColor=black)
+13. **Firestore**: ![Firestore](https://img.shields.io/badge/-Firestore-FFCA28?style=flat-square&logo=firebase&logoColor=black)
     A NoSQL database provided by Firebase for efficient and scalable data storage.
 
-16. **Upstash**: ![Upstash](https://img.shields.io/badge/-Upstash-DC382D?style=flat-square&logo=redis&logoColor=white)
+14. **Upstash**: ![Upstash](https://img.shields.io/badge/-Upstash-DC382D?style=flat-square&logo=redis&logoColor=white)
     A Redis-based rate limiter for controlling user request rates, preventing abuse and ensuring server stability.
 
 ## Features
