@@ -1,24 +1,4 @@
-import { User } from 'firebase/auth'
-
-export enum AuthActionType {
-	LOGIN = 'LOGIN',
-	LOGOUT = 'LOGOUT',
-	AUTHREADY = 'AUTHREADY'
-}
-
-export type AuthData = {
-	isAuthReady: Boolean
-	user: User | null
-}
-
-export type Action =
-	| {
-			type: AuthActionType.LOGOUT
-	  }
-	| {
-			type: AuthActionType.LOGIN | AuthActionType.AUTHREADY
-			payload: User | null
-	  }
+import { Action, AuthActionType, AuthData } from '@/lib/types'
 
 export const INITIAL_STATE: AuthData = {
 	isAuthReady: false,

@@ -1,18 +1,12 @@
 import Insights from './insights'
-import { Badge } from './ui/badge'
+import { Badge } from '@/components/ui/badge'
 import { fontSansCD } from '@/lib/fonts'
 import { cn } from '@/lib/utils'
-import { getGenerationCount, getUsersLists } from '@/utils/firebase-helper'
 import { GithubIcon } from 'lucide-react'
 
 export default async function Header() {
-	const countData = getGenerationCount()
-	const usersListData = getUsersLists()
-
-	const [count, usersList] = await Promise.all([countData, usersListData])
-
 	return (
-		<header className='flex max-w-2xl px-1 mx-auto pt-8 pb-12 sm:py-12 md:py-16 flex-col justify-center items-center text-center'>
+		<header className='flex max-w-2xl px-1 mx-auto pt-10 pb-12 sm:py-16 md:py-20 flex-col justify-center items-center text-center'>
 			<a
 				href='https://github.com/canwebe/devGenie'
 				target='_blank'
@@ -28,7 +22,7 @@ export default async function Header() {
 			</a>
 			<h1
 				className={cn(
-					'text-3xl min-[520px]:text-4xl sm:text-5xl tracking-wide font-sans-cd font-extrabold mt-6',
+					'text-3xl min-[520px]:text-4xl sm:text-5xl break-words tracking-wide font-sans-cd font-extrabold mt-6',
 					fontSansCD.variable
 				)}
 			>
@@ -39,7 +33,7 @@ export default async function Header() {
         create compelling profiles, project descriptions, and experiences that
         showcase your skills and expertise.
       </p>*/}
-			<Insights className='mt-3' count={count} usersList={usersList} />
+			<Insights className='mt-2' />
 		</header>
 	)
 }

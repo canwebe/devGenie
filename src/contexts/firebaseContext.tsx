@@ -1,12 +1,9 @@
 'use client'
 
 import { auth } from '@/lib/firebase'
-import AuthReducer, {
-	Action,
-	AuthActionType,
-	AuthData,
-	INITIAL_STATE
-} from '@/reducers/authReducer'
+import { Action, AuthActionType, AuthData } from '@/lib/types'
+import AuthReducer, { INITIAL_STATE } from '@/reducers/authReducer'
+
 import { Unsubscribe, onAuthStateChanged } from 'firebase/auth'
 import {
 	Dispatch,
@@ -29,7 +26,7 @@ export const useAuth = () => useContext(AuthContext)
 const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 	const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE)
 
-	// Check Auth (Persistence)
+	// Check auth (Persistence)
 	useEffect(() => {
 		let unsub: Unsubscribe | undefined
 		try {

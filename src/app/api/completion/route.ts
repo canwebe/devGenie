@@ -1,11 +1,6 @@
-import { formSchema } from '@/lib/formSchema'
-import { getPromt } from '@/utils/helper'
+import { Data } from '@/lib/types'
+import { getPromt } from '@/lib/utils'
 import { CohereStream, StreamingTextResponse } from 'ai'
-import { z } from 'zod'
-
-type Data = Omit<z.infer<typeof formSchema>, 'description'> & {
-	prompt: string
-}
 
 export const runtime = 'edge'
 
@@ -29,7 +24,7 @@ export async function POST(req: Request) {
 		headers: {
 			Accept: 'application/json',
 			'Content-Type': 'application/json',
-			Authorization: `Bearer ${process.env.COHERE_API_KEY!}`,
+			Authorization: `Bearer ${process.env.COHERE_API_KEY}`,
 			'Cohere-Version': '2022-12-06'
 		},
 		body

@@ -1,5 +1,5 @@
-import { ThemeProvider } from '@/components/theme-provider'
 import AuthContextProvider from '@/contexts/firebaseContext'
+import { ThemeProvider } from '@/contexts/themeProvider'
 import { fontSans } from '@/lib/fonts'
 import { cn } from '@/lib/utils'
 import '@/styles/globals.css'

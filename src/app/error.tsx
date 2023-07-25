@@ -5,18 +5,19 @@ import { Button } from '@/components/ui/button'
 export default function ErrorPage({
 	reset
 }: {
-	error: Error
+	error: Error & { digest?: string }
 	reset: () => void
 }) {
 	return (
-		<div className='h-screen grid place-items-center'>
+		<div className='h-screen bg-background flex justify-center items-center'>
 			<div className='text-center'>
-				<h3 className='font-bold text-[24px] opacity-60 mb-2'>
-					Something Went Wrong!
-				</h3>
+				<h2 className='font-bold select-none text-red-600 text-9xl'>:(</h2>
+				<p className='text-xl font-semibold text-red-600 tracking-wider mt-8'>
+					Something Went Wrong.
+				</p>
 				<Button
-					variant={'ghost'}
-					size={'sm'}
+					className='text-red-600'
+					variant={'link'}
 					type='reset'
 					onClick={() => reset()}
 				>

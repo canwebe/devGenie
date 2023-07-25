@@ -1,7 +1,7 @@
 'use client'
 
-import { GithubIcon, GoogleIcon } from './icons'
-import { Button } from './ui/button'
+import { GithubIcon, GoogleIcon, SpinnerBars } from './icons'
+import { Button } from '@/components/ui/button'
 import {
 	Dialog,
 	DialogContent,
@@ -9,21 +9,17 @@ import {
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger
-} from './ui/dialog'
+} from '@/components/ui/dialog'
 
 import { cn } from '@/lib/utils'
 
 import { useAuth } from '@/contexts/firebaseContext'
 import useLogin from '@/hooks/useLogin'
 import useLogout from '@/hooks/useLogout'
-import { Loader } from 'lucide-react'
 
-export default function AuthBtn() {
+export default function AuthButton() {
 	const { user, isAuthReady } = useAuth()
-
-	const provider = user?.providerId
-
-	console.log('Provider', provider)
+	const provider = user?.providerData[0].providerId
 
 	const { login, isLoading } = useLogin()
 	const { logout, isLoading: logoutLoading } = useLogout()
@@ -31,7 +27,7 @@ export default function AuthBtn() {
 	if (user && !isLoading) {
 		return (
 			<Button
-				className='w-20'
+				className='w-18 dark:bg-red-600 dark:hover:bg-red-700 bg-red-500'
 				disabled={logoutLoading}
 				onClick={logout}
 				variant={'destructive'}
@@ -45,26 +41,26 @@ export default function AuthBtn() {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button className='w-20' disabled={!isAuthReady} size={'sm'}>
+				<Button className='w-18' disabled={!isAuthReady} size={'sm'}>
 					Login
 				</Button>
 			</DialogTrigger>
-			<DialogContent className='py-20'>
+			<DialogContent className='py-16'>
 				<DialogHeader>
 					<DialogTitle className='text-2xl sm:text-3xl text-center mb-8'>
 						Log in to DevGenie
 					</DialogTitle>
-					<DialogDescription className='flex flex-col gap-3 justify-center'>
+					<DialogDescription className='flex flex-col gap-5'>
 						<Button
 							disabled={isLoading}
 							onClick={() => login('github')}
-							className='flex gap-2 items-center mx-auto'
+							className='flex gap-2 items-center mx-auto min-w-[15rem]'
 							size={'lg'}
 							variant={'outline'}
 						>
-							{isLoading ? (
+							{isLoading && provider === 'github.com' ? (
 								<>
-									<Loader className='animate-spin' />
+									<SpinnerBars width={16} height={16} />
 									Loading
 								</>
 							) : (
@@ -76,9 +72,9 @@ export default function AuthBtn() {
 						</Button>
 						<span
 							className={cn(
-								'flex items-center text-center px-8',
-								'before:h-px before:mr-4 before:bg-border before:flex-1',
-								'after:h-px after:ml-4 after:bg-border after:flex-1'
+								'flex items-center text-center min-[420px]:px-8 w-full',
+								'before:h-px before:mr-4 before:bg-border/50 before:flex-1',
+								'after:h-px after:ml-4 after:bg-border/50 after:flex-1'
 							)}
 						>
 							or
@@ -86,13 +82,13 @@ export default function AuthBtn() {
 						<Button
 							disabled={isLoading}
 							onClick={() => login('google')}
-							className='flex gap-2 items-center mx-auto'
+							className='flex gap-2 items-center mx-auto min-w-[15rem]'
 							size={'lg'}
 							variant={'outline'}
 						>
-							{isLoading ? (
+							{isLoading && provider === 'google.com' ? (
 								<>
-									<Loader className='animate-spin' />
+									<SpinnerBars width={16} height={16} />
 									Loading
 								</>
 							) : (

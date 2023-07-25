@@ -14,6 +14,21 @@ export function formatDate(input: string | number): string {
 	})
 }
 
-export function absoluteUrl(path: string) {
-	return `${process.env.NEXT_PUBLIC_APP_URL}${path}`
+export function getPromt(
+	mode: string,
+	tone: string,
+	characters: number,
+	prompt: string
+) {
+	let promptType = 'a profile bio'
+
+	if (mode === 'project') {
+		promptType = 'a project description'
+	}
+
+	if (mode === 'experience') {
+		promptType = 'an experience'
+	}
+
+	return `Create ${promptType} in ${tone} tone. Make sure to use simple sentences, under ${characters?.toString()} characters and base them on this context : ${prompt}`
 }

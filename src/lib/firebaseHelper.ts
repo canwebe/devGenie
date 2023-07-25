@@ -14,11 +14,6 @@ import {
 	updateDoc
 } from 'firebase/firestore'
 
-export type UserData = {
-	photoURL: string
-	uid: string
-}
-
 export const createUser = async (user: User) => {
 	const userDoc = doc(db, 'users', user?.uid)
 
