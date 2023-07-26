@@ -1,5 +1,6 @@
 import { formSchema } from './formSchema'
 import { User } from 'firebase/auth'
+import { DocumentData } from 'firebase/firestore'
 import { Dispatch } from 'react'
 import { z } from 'zod'
 
@@ -39,4 +40,9 @@ export type Data = Omit<z.infer<typeof formSchema>, 'description'> & {
 
 export type PlaceholderObj = {
   [key: string]: string
+}
+
+export type InsightProps = {
+  count: number
+  usersList: DocumentData[]
 }
