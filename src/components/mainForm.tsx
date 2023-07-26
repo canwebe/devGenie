@@ -109,7 +109,6 @@ export default function MainForm() {
   // Spin delay for spinner
   const showSpinner = useSpinDelay(isLoading || isSubmitting)
 
-  console.count('home')
   return (
     <>
       <main className="max-w-2xl w-full px-4 mx-auto">
