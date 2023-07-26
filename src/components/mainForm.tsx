@@ -1,18 +1,19 @@
 'use client'
 
-import { useRef } from 'react'
-import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useCompletion } from 'ai/react'
-import { z } from 'zod'
-import { toast } from 'sonner'
 import { ArrowRight } from 'lucide-react'
+import { useRef, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+import { useSpinDelay } from 'spin-delay'
+import { z } from 'zod'
 
-import { fontSansCD } from '@/lib/fonts'
 import { Separator } from './ui/seprator'
+import { fontSansCD } from '@/lib/fonts'
 import { cn } from '@/lib/utils'
 
-import { Button } from './ui/button'
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -20,8 +21,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from './ui/form'
-import { Slider } from './ui/slider'
+} from '@/components/ui/form'
+import { Label } from '@/components/ui/label'
+import { NumberList } from '@/components/ui/number'
 import {
   Select,
   SelectContent,
@@ -31,14 +33,15 @@ import {
   SelectSeparator,
   SelectTrigger,
   SelectValue,
-} from './ui/select'
-import { NumberList } from './ui/number'
-import { Textarea } from './ui/textarea'
-import { Label } from './ui/label'
+} from '@/components/ui/select'
+import { Slider } from '@/components/ui/slider'
+import { Textarea } from '@/components/ui/textarea'
 
-import { formSchema } from '@/lib/formSchema'
-import { incrementGenerateCount } from '@/utils/firebase-helper'
+import { SpinnerDots } from './icons'
 import { useAuth } from '@/contexts/firebaseContext'
+import { incrementGenerateCount } from '@/lib/firebaseHelper'
+import { formSchema } from '@/lib/formSchema'
+import { formDefaultValue, placeholderObj } from '@/lib/data'
 
 type formData = z.infer<typeof formSchema>
 
@@ -46,23 +49,21 @@ export default function MainForm() {
   // Auth Data
   const { user, isAuthReady } = useAuth()
 
-  // Generated Content Ref for scrolling
+  // Generated Content ref for scrolling
   const targetRef = useRef<null | HTMLElement>(null)
 
-  const scrollTo = () => {
-    console.log(targetRef, 'log target ref')
-    if (targetRef.current) {
-      targetRef.current.scrollIntoView({ behavior: 'smooth' })
-    }
+  // Scrolling to Response Generated
+  const scrollToOutput = () => {
+    setTimeout(() => {
+      if (targetRef.current) {
+        targetRef.current.scrollIntoView({ behavior: 'smooth' })
+      }
+    }, 500)
   }
 
   // React Hook Form
   const form = useForm<formData>({
-    defaultValues: {
-      mode: 'bio',
-      description: '',
-      characters: 200,
-    },
+    defaultValues: formDefaultValue,
     resolver: zodResolver(formSchema),
   })
 
@@ -79,15 +80,16 @@ export default function MainForm() {
     },
     onResponse: (res) => {
       if (res.status === 429) {
-        toast.error('You have used 15 generation. Please try again 5min later.')
+        toast.error(
+          'Oops! You have reached your max limit. Please try again 2 min later.'
+        )
       }
-      scrollTo()
+      scrollToOutput()
     },
     onError: (error) => {
       console.log(error)
     },
     onFinish: () => {
-      toast.success('Generated Successfully')
       incrementGenerateCount()
     },
   })
@@ -95,10 +97,8 @@ export default function MainForm() {
   // Functions
   const onSubmit = async (data: formData) => {
     try {
-      console.log('Form Data', data)
       if (!user) {
-        toast.error('You need to login first')
-        return
+        return toast.error('Please login to generate.')
       }
       await complete(data?.description)
     } catch (error) {
@@ -106,12 +106,16 @@ export default function MainForm() {
     }
   }
 
+  // Spin delay for spinner
+  const showSpinner = useSpinDelay(isLoading || isSubmitting)
+
+  console.count('home')
   return (
     <>
       <main className="max-w-2xl w-full px-4 mx-auto">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
-            {/* Select mode component */}
+            {/* Mode select */}
             <FormField
               control={form.control}
               name="mode"
@@ -119,18 +123,23 @@ export default function MainForm() {
                 <FormItem className="mb-6">
                   <FormLabel className="flex gap-3 items-center mb-3">
                     <NumberList
-                      className={errors?.mode ? 'bg-destructive' : ''}
+                      className={cn(errors?.mode && 'bg-destructive')}
                     >
                       1
                     </NumberList>
                     Select a mode
                   </FormLabel>
                   <Select
-                    onValueChange={field.onChange}
+                    onValueChange={(inputValue) => {
+                      field.onChange(inputValue)
+                      form.setValue('description', '')
+                    }}
                     defaultValue={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger>
+                      <SelectTrigger
+                        className={cn(errors?.mode && 'border-destructive')}
+                      >
                         <SelectValue placeholder="Profile Bio" />
                       </SelectTrigger>
                     </FormControl>
@@ -151,7 +160,8 @@ export default function MainForm() {
                 </FormItem>
               )}
             />
-            {/* Description component */}
+
+            {/* Description textarea */}
             <FormField
               control={form.control}
               name="description"
@@ -159,7 +169,7 @@ export default function MainForm() {
                 <FormItem className="mb-6">
                   <FormLabel className="flex gap-3 items-center mb-3">
                     <NumberList
-                      className={errors?.description ? 'bg-destructive' : ''}
+                      className={cn(errors?.description && 'bg-destructive')}
                     >
                       2
                     </NumberList>
@@ -167,8 +177,14 @@ export default function MainForm() {
                   </FormLabel>
                   <FormControl>
                     <Textarea
-                      className="h-24"
-                      placeholder="Enter your description..."
+                      className={cn(
+                        'h-24',
+                        errors?.description && 'border-destructive'
+                      )}
+                      placeholder={
+                        placeholderObj[form.watch('mode')] ||
+                        'Enter Description....'
+                      }
                       {...field}
                     />
                   </FormControl>
@@ -177,13 +193,13 @@ export default function MainForm() {
               )}
             />
 
-            {/* Select component for Tone & creativity */}
+            {/* Tone & creativity */}
             <Label className="flex gap-3 items-center mb-3">
               <NumberList>3</NumberList>
               Fine tunning
             </Label>
             <div className="flex mt-2 mb-6 tems-center gap-4">
-              {/* Select tone component */}
+              {/* Tone select */}
               <FormField
                 control={form.control}
                 name="tone"
@@ -213,7 +229,7 @@ export default function MainForm() {
                 )}
               />
 
-              {/* Select creativity component */}
+              {/* Creativity select */}
               <FormField
                 control={form.control}
                 name="creativity"
@@ -244,7 +260,7 @@ export default function MainForm() {
               />
             </div>
 
-            {/* Slider component */}
+            {/* Character range input */}
             <FormField
               control={form.control}
               name="characters"
@@ -262,15 +278,16 @@ export default function MainForm() {
                 </FormItem>
               )}
             />
+
             {/* Submit button */}
             <Button
-              disabled={isLoading || isSubmitting || !isAuthReady}
+              disabled={showSpinner || !isAuthReady}
               type="submit"
               size={'lg'}
               className="w-full"
             >
-              {isLoading || isSubmitting ? (
-                'Generating'
+              {showSpinner ? (
+                <SpinnerDots width={24} height={24} />
               ) : (
                 <>
                   Generate
@@ -280,12 +297,12 @@ export default function MainForm() {
             </Button>
           </form>
         </Form>
-        {/* Generate div */}
+
+        {/* Generated output */}
         <output className="flex flex-col space-y-10 mt-10">
           {completion ? (
             <>
               <h2
-                // ref={targetRef}
                 className={cn(
                   'sm:text-4xl min-[520px]:text-3xl text-2xl font-semibold tracking-wide text-foreground mx-auto font-sans-cd',
                   fontSansCD.variable
@@ -293,13 +310,22 @@ export default function MainForm() {
               >
                 Your generated bio
               </h2>
-              {/* rome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
               <div
-                title="Click to copy"
-                className="rounded-xl shadow-md p-4 hover:bg-muted/50 transition cursor-copy border"
+                tabIndex={0}
+                title="Click to copy the content."
+                className={cn(
+                  'rounded-xl shadow-md p-4 hover:bg-muted/50 transition cursor-copy border',
+                  'ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2'
+                )}
                 onClick={() => {
                   navigator.clipboard.writeText(completion)
-                  toast.success('Successfully! copied to clipboard')
+                  return toast.success('Copied to clipboard successfullly.')
+                }}
+                onKeyDown={(value) => {
+                  if (value.key === 'Enter' || value.key === ' ') {
+                    navigator.clipboard.writeText(completion)
+                    return toast.success('Copied to clipboard successfullly.')
+                  }
                 }}
               >
                 <p className="break-words">{completion}</p>
@@ -308,7 +334,7 @@ export default function MainForm() {
           ) : null}
         </output>
       </main>
-      <Separator className="sm:mt-22 mt-16" />
+      <Separator className="sm:mt-16 mt-14" />
       <footer
         ref={targetRef}
         className="text-center text-sm max-w-2xl mx-auto h-16 sm:h-20 w-full sm:pt-2 pt-4 flex sm:flex-row flex-col justify-center items-center px-3 space-y-3 sm:mb-0 mb-3"

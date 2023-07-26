@@ -40,7 +40,7 @@ export const incrementGenerateCount = async () => {
       count: increment(1),
     })
   } catch (error) {
-    console.log('Error in incremeting generation count', error)
+    console.log('Error in incremeting generation count: ', error)
   }
 }
 
@@ -49,11 +49,12 @@ export const getGenerationCount = async (): Promise<number> => {
     const countDoc = doc(db, 'generationCount', 'count')
     const snapshot = await getDoc(countDoc)
     if (!snapshot.exists()) {
-      throw Error('Something went wrong in getting count')
+      console.log('Something went wrong while getting count.')
+      return 0
     }
     return snapshot.data()?.count
   } catch (error) {
-    console.log('Error in getting generation count', error)
+    console.log('Error in getting generation count: ', error)
     return 0
   }
 }
@@ -62,7 +63,7 @@ export const getUsersLists = async () => {
   try {
     const usersCol = query(
       collection(db, 'users'),
-      orderBy('createdAt', 'desc'),
+      orderBy('createdAt'),
       limit(7)
     )
     const snapshot = await getDocs(usersCol)
@@ -73,7 +74,7 @@ export const getUsersLists = async () => {
     }
     return snapshot.docs.map((item) => item.data())
   } catch (error) {
-    console.log('Error in getting User lists', error)
+    console.log('Error in getting users list: ', error)
     return []
   }
 }

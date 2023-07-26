@@ -1,34 +1,26 @@
-import { DocumentData } from 'firebase/firestore'
+import { InsightProps } from '@/lib/types'
 import Image from 'next/image'
 
-export default async function Insights({
-  count,
-  usersList,
-}: {
-  count: number
-  usersList: DocumentData[]
-}) {
-  console.count('Insight re render')
-
+export default async function Insights({ count, usersList }: InsightProps) {
   return (
-    <div className="mb-6 text-center">
-      <div className="mb-2 opacity-60 text-[25px]">
-        <p>Total Generated : {count.toString()}</p>
-      </div>
-      <div>
-        <div className="flex justify-center">
-          {usersList.map((user) => (
-            <Image
-              key={user?.uid}
-              src={user?.photoURL}
-              width={30}
-              height={30}
-              alt="user"
-              className="rounded-full [&:not(:first-child)]:-translate-x-2 "
-            />
-          ))}
-        </div>
-        <p className="mt-2 opacity-50 text-xs">Recently Joined</p>
+    <div className="text-center w-full flex flex-col gap-2 mt-1 md:mt-2">
+      <p className="text-xl opacity-60">
+        Generated {count.toString()} times so far.
+      </p>
+      <p className="text-xs mt-2 font-bold text-primary/50 uppercase">
+        Recently Joined
+      </p>
+      <div className="flex justify-center items-center flex-row-reverse">
+        {usersList.map((user) => (
+          <Image
+            key={user?.uid}
+            src={user?.photoURL}
+            width={36}
+            height={36}
+            alt={user?.name ? `${user?.name}'s avatar` : 'user profile avatar'}
+            className="rounded-full dark:border-background border-2 [&:not(:first-child)]:-mr-3 [&:not(:first-child)]:shadow-2xl z-10"
+          />
+        ))}
       </div>
     </div>
   )
