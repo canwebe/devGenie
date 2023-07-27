@@ -4,7 +4,7 @@ import Image from 'next/image'
 export default async function Insights({ count, usersList }: InsightProps) {
   return (
     <div className="text-center w-full flex flex-col gap-2 mt-1 md:mt-2">
-      <p className="text-xl opacity-60">
+      <p className="text-lg font-light text-primary/90">
         Generated {count.toString()} times so far.
       </p>
       <p className="text-xs mt-2 font-bold text-primary/50 uppercase">
