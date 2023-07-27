@@ -23,7 +23,7 @@ export default function Nav() {
   }, [])
 
   return (
-    <>
+    <div className='sticky top-0 backdrop-blur z-50 bg-background/90'>
       <nav className="max-w-2xl mx-auto w-full px-4 flex h-16 justify-between items-center">
         <h1
           className={cn(
@@ -39,6 +39,6 @@ export default function Nav() {
         </div>
       </nav>
       <Separator />
-    </>
+    </div>
   )
 }
