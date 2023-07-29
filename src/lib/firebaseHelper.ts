@@ -63,7 +63,7 @@ export const getUsersLists = async () => {
   try {
     const usersCol = query(
       collection(db, 'users'),
-      orderBy('createdAt'),
+      orderBy('createdAt', 'desc'),
       limit(7)
     )
     const snapshot = await getDocs(usersCol)

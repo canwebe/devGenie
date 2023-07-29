@@ -11,7 +11,7 @@ export default async function Insights({ count, usersList }: InsightProps) {
         Recently Joined
       </p>
       <div className="flex justify-center items-center flex-row-reverse">
-        {usersList.map((user) => (
+        {usersList.reverse().map((user) => (
           <Image
             key={user?.uid}
             src={user?.photoURL}
