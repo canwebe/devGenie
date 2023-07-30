@@ -67,13 +67,14 @@ export const getUsersLists = async () => {
 			limit(7)
 		)
 		const snapshot = await getDocs(usersCol)
-
-		if (snapshot.empty) {
-			throw Error('Something went wrong while getting user list.')
-		}
-		return snapshot.docs.map((item) => item.data())
-	} catch (error) {
-		console.log('Error in getting users list: ', error)
-		return []
-	}
+    
+    if (snapshot.empty) {
+      console.error('Users List is empty')
+      return []
+    }
+    return snapshot.docs.map((item) => item.data())
+  } catch (error) {
+    console.log('Error in getting users list: ', error)
+    return []
+  }
 }
